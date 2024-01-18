@@ -3,8 +3,6 @@ import styles from './page.module.css'
 
 import React from 'react';
 
-import Timer from '../components/timer'
-import Counter from '../components/counter';
 import Inputdetail from '../components/inputdetail';
 
 
