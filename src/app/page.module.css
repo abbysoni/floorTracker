@@ -108,7 +108,9 @@
 
 .logo {
   position: relative;
-  height: 400px;
+  width: 'auto';
+  height: 'auto';
+  /* height: 400px; */
 }
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {

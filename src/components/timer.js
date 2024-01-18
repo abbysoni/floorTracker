@@ -3,40 +3,41 @@
 // Timer.js
 
 import React, { useState, useEffect } from 'react';
-import moment from 'moment';
 
-const Timer = () => {
-  const [currentTime, setCurrentTime] = useState(moment());
-  const [inputValue, setInputValue] = useState('');
+
+const Timer = ({ serviceTime, startTimer, timerStarted }) => {
+  const [remainingTime, setRemainingTime] = useState(0);
+
+  console.log('Service Time from timer:', serviceTime);
+  console.log('Start Timer from timer:', startTimer);
+  console.log('timerStarted from timer:', timerStarted);
 
   useEffect(() => {
-    
-    const timerInterval = setInterval(() => {
-      setCurrentTime(moment());
-    }, 1000);
+    let intervalId;
 
-    return () => clearInterval(timerInterval);
-  
-  }, []);
+    if (timerStarted && serviceTime) {
 
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
+      const initialRemainingTime = serviceTime * 60 * 1000;
+      
+      setRemainingTime(initialRemainingTime);
+
+      intervalId = setInterval(() => {
+        // Update remaining time every second
+        setRemainingTime((prevRemainingTime) => Math.max(0, prevRemainingTime - 1000));
+      }, 1000);
+    }
+
+    return () => clearInterval(intervalId);
+  }, [serviceTime, timerStarted]);
 
   return (
     <div>
-      <h2>Live Running Timer:</h2>
-      <p>{currentTime.format('YYYY-MM-DD HH:mm:ss')}</p>
-
-      <div>
-        <label htmlFor="inputBox">Enter Something:</label>
-        <input
-          type="text"
-          id="inputBox"
-          value={inputValue}
-          onChange={handleInputChange}
-        />
-      </div>
+      {/* Display the remaining time */}
+      {remainingTime >= 0 ? (
+        <p>{remainingTime}</p>
+      ) : (
+        <p>Timer Expired</p>
+      )}
     </div>
   );
 };
