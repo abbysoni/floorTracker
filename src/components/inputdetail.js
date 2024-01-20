@@ -17,12 +17,10 @@ const Inputdetail = () => {
 
   const [timerStarted, setTimerStarted] = useState(false);
 
-  const handleStartTimer = () => {
-    setTimerStarted(true);
-  };
-
 
   const handleSubmit = (e) => {
+
+    setTimerStarted(true);
 
     e.preventDefault();
 
@@ -35,14 +33,12 @@ const Inputdetail = () => {
       dateOfSale,
       serviceType,
       currentOdo,
-      timerStarted, 
+      timerStarted:true, 
       serviceTime, 
     };
 
     setData([...data, newData]);
 
-    handleStartTimer();
-  
     console.log('Vehicle No:', vehicleNo);
     console.log('Model:', model);
     console.log('Date of Sale:', dateOfSale);
