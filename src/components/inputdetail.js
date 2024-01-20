@@ -16,17 +16,48 @@ const Inputdetail = () => {
   const [serviceTime, setServiceTime] = useState('');
   const [timerStarted, setTimerStarted] = useState(false);
 
-  const [data, setData] = useState(JSON.parse(localStorage.getItem('floorTrackerData')) || []);
+  
+ // Check if localStorage is available
+  const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage;
+
+  // Initialize data state using localStorage or an empty array
+  const initialData = isLocalStorageAvailable ? JSON.parse(localStorage.getItem('floorTrackerData')) || [] : [];
+  const [data, setData] = useState(initialData);
 
   useEffect(() => {
-    localStorage.setItem('floorTrackerData', JSON.stringify(data));
-  }, [data]);
+    if (isLocalStorageAvailable) {
+      localStorage.setItem('floorTrackerData', JSON.stringify(data));
+    }
+  }, [data, isLocalStorageAvailable]);
+
+
+  // const handleReset = () => {
+  //   if (isLocalStorageAvailable) {
+  //     localStorage.removeItem('floorTrackerData');
+  //   }
+  //   setData([]);
+  // };
 
   const handleReset = () => {
     setData([]);
+    setVehicleNo('');
+    setModel('');
+    setDateOfSale('');
+    setServiceType(null);
+    setCurrentOdo('');
+    setServiceTime('');
+    setTimerStarted(false);
+  
+    data.forEach((row) => {
+      localStorage.removeItem(`timerStarted_${row.rowKey}`);
+      localStorage.removeItem(`timerRemainingTime_${row.rowKey}`);
+    });
   };
 
-
+  // Function to generate a unique key
+const generateRowKey = () => {
+  return new Date().getTime(); // Using timestamp as a unique key
+};
 
   const handleSubmit = (e) => {
 
@@ -35,7 +66,8 @@ const Inputdetail = () => {
     e.preventDefault();
 
     if (vehicleNo && model && dateOfSale && serviceType && currentOdo) {
-      
+
+      const newRowKey = generateRowKey();
     // Add the entered data to the state
     const newData = {
       vehicleNo,
@@ -43,8 +75,12 @@ const Inputdetail = () => {
       dateOfSale,
       serviceType,
       currentOdo,
-      timerStarted:true, 
       serviceTime, 
+      timerStarted: true,
+        timerKey: newRowKey, // Add a key for the timer
+        serviceTime,
+        rowKey: newRowKey, // Unique key for the row
+      
     };
 
     setData([...data, newData]);
@@ -65,6 +101,11 @@ const Inputdetail = () => {
     setCurrentOdo('');
     setServiceTime('');
     setTimerStarted(false)
+
+    // Save initial timer state for the new row
+    localStorage.setItem(`timerStarted_${newRowKey}`, 'true');
+    localStorage.setItem(`timerRemainingTime_${newRowKey}`, String(serviceTime * 60 * 1000));
+  
   } 
   else {
     // Handle case where not all required fields are filled
@@ -154,7 +195,7 @@ const Inputdetail = () => {
             </h2>
             {/* Use the ServiceTypeDropdown component */}
             <ServiceTypeDropdown
-              value={serviceType}
+              value={serviceType || ''}
               onChange={(value) => {
                 setServiceType(value);
                 // Find the corresponding time and set it in the state

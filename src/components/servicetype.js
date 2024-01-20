@@ -2,6 +2,7 @@
 
 import React from 'react';
 const serviceTypeOptions = [
+    { label: 'None', time: 0 },
     { label: 'Clutch Work', time: 30 },
     { label: 'Gear Stuck', time: 45 },
     { label: 'Crown Noise', time: 60 },
@@ -13,7 +14,7 @@ const ServiceTypeDropdown = ({ value, onChange }) => {
   return (
     <select
       id="serviceType"
-      value={value}
+      value={value || ''}
       onChange={(e) => onChange(e.target.value)}
     >
       <option value="" disabled>

@@ -31,13 +31,11 @@ const Table = ({ data }) => {
             <td>{row.dateOfSale}</td>
             <td>{row.serviceType}</td>
             <td>{row.currentOdo}</td>
-            {/* Additional columns for timer status and timer */}
-            {/* <td>{row.timerStarted}</td> */}
             <td>{row.serviceTime} Mins</td>
             <td><Timer serviceTime={row.serviceTime} timerStarted={row.timerStarted}
             rowKey={index} // Assuming the row index is used as a key
             /></td>
-            <td></td>
+            <td>none</td>
           </tr>
         ))}
 

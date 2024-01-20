@@ -1,16 +1,9 @@
-'use client'
-
-// Timer.js
+'use client';
 
 import React, { useState, useEffect } from 'react';
 
-
-const Timer = ({ serviceTime, timerStarted ,rowKey}) => {
+const Timer = ({ serviceTime, timerStarted, rowKey }) => {
   const [remainingTime, setRemainingTime] = useState(0);
-
-  // console.log('Service Time from timer:', serviceTime);
-  // console.log('Start Timer from timer:', startTimer);
-  // console.log('timerStarted from timer:', timerStarted);
 
   useEffect(() => {
     let intervalId;
@@ -20,14 +13,17 @@ const Timer = ({ serviceTime, timerStarted ,rowKey}) => {
 
     if (storedTime && storedTimerStarted) {
       setRemainingTime(Number(storedTime));
+
       if (storedTimerStarted === 'true') {
         // Resume the timer if it was started
         intervalId = setInterval(() => {
-          setRemainingTime((prevRemainingTime) => Math.max(0, prevRemainingTime - 1000));
-          // Save the remaining time to local storage
-          localStorage.setItem(`timerRemainingTime_${rowKey}`, remainingTime - 1000);
+          setRemainingTime((prevRemainingTime) => {
+            const newRemainingTime = Math.max(0, prevRemainingTime - 1000);
+            // Save the updated remaining time to local storage
+            localStorage.setItem(`timerRemainingTime_${rowKey}`, String(newRemainingTime));
+            return newRemainingTime;
+          });
         }, 1000);
-        
       }
     } else if (timerStarted && serviceTime) {
       // If no stored time, start a new timer
@@ -35,9 +31,12 @@ const Timer = ({ serviceTime, timerStarted ,rowKey}) => {
       setRemainingTime(initialRemainingTime);
 
       intervalId = setInterval(() => {
-        setRemainingTime((prevRemainingTime) => Math.max(0, prevRemainingTime - 1000));
-        // Save the remaining time to local storage
-        localStorage.setItem(`timerRemainingTime_${rowKey}`, remainingTime - 1000);
+        setRemainingTime((prevRemainingTime) => {
+          const newRemainingTime = Math.max(0, prevRemainingTime - 1000);
+          // Save the updated remaining time to local storage
+          localStorage.setItem(`timerRemainingTime_${rowKey}`, String(newRemainingTime));
+          return newRemainingTime;
+        });
       }, 1000);
     }
 
