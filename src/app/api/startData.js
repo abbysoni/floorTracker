@@ -1,4 +1,3 @@
-// pages/api/startDate.js
 
 export default (req, res) => {
     if (req.method === 'POST') {
