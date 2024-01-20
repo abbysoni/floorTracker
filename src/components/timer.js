@@ -5,7 +5,7 @@
 import React, { useState, useEffect } from 'react';
 
 
-const Timer = ({ serviceTime, timerStarted }) => {
+const Timer = ({ serviceTime, timerStarted ,rowKey}) => {
   const [remainingTime, setRemainingTime] = useState(0);
 
   // console.log('Service Time from timer:', serviceTime);
@@ -15,20 +15,34 @@ const Timer = ({ serviceTime, timerStarted }) => {
   useEffect(() => {
     let intervalId;
 
-    if (timerStarted && serviceTime) {
+    const storedTime = localStorage.getItem(`timerRemainingTime_${rowKey}`);
+    const storedTimerStarted = localStorage.getItem(`timerStarted_${rowKey}`);
 
-      const initialRemainingTime = serviceTime * 60*1000;
-      
+    if (storedTime && storedTimerStarted) {
+      setRemainingTime(Number(storedTime));
+      if (storedTimerStarted === 'true') {
+        // Resume the timer if it was started
+        intervalId = setInterval(() => {
+          setRemainingTime((prevRemainingTime) => Math.max(0, prevRemainingTime - 1000));
+          // Save the remaining time to local storage
+          localStorage.setItem(`timerRemainingTime_${rowKey}`, remainingTime - 1000);
+        }, 1000);
+        
+      }
+    } else if (timerStarted && serviceTime) {
+      // If no stored time, start a new timer
+      const initialRemainingTime = serviceTime * 60 * 1000;
       setRemainingTime(initialRemainingTime);
 
       intervalId = setInterval(() => {
-        // Update remaining time every second
         setRemainingTime((prevRemainingTime) => Math.max(0, prevRemainingTime - 1000));
+        // Save the remaining time to local storage
+        localStorage.setItem(`timerRemainingTime_${rowKey}`, remainingTime - 1000);
       }, 1000);
     }
 
     return () => clearInterval(intervalId);
-  }, [serviceTime, timerStarted]);
+  }, [serviceTime, timerStarted, rowKey]);
 
   const formatTime = (ms) => {
     const hours = Math.floor(ms / 3600000);

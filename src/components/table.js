@@ -5,18 +5,6 @@ import React from 'react';
 import Timer from './timer';
 import styles from './table.module.css'
 
-// const printval= () => {
-//   data.map((row, index) => (
-//   console.log('Vehicle No:', vehicleNo);
-//     console.log('Model:', model);
-//     console.log('Date of Sale:', dateOfSale);
-//     console.log('Service Type:', serviceType);
-//     console.log('Current Odometer', currentOdo)
-    
-//     console.log('timerStarted', timerStarted) ;
-//     console.log('Service Time:', serviceTime);
-//     ))
-// }
 
 const Table = ({ data }) => {
   return (
@@ -31,10 +19,11 @@ const Table = ({ data }) => {
           <th>Odo Reading</th>
           <th>Time Alloted</th>
           <th>Timer</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        {data.map((row, index) => (
+        {data && data.map((row, index) => (
           <tr key={index}>
             <td>{index+1}</td>
             <td>{row.vehicleNo}</td>
@@ -45,14 +34,13 @@ const Table = ({ data }) => {
             {/* Additional columns for timer status and timer */}
             {/* <td>{row.timerStarted}</td> */}
             <td>{row.serviceTime} Mins</td>
-            <td><Timer serviceTime={row.serviceTime} timerStarted={row.timerStarted}/></td>
+            <td><Timer serviceTime={row.serviceTime} timerStarted={row.timerStarted}
+            rowKey={index} // Assuming the row index is used as a key
+            /></td>
+            <td></td>
           </tr>
         ))}
-        <tr>
-          <td>
-          {/* <Timer serviceTime={serviceTime} startTimer={timerStarted} timerStarted={timerStarted} /> */}
-          </td>
-        </tr>
+
       </tbody>
     </table>
   );

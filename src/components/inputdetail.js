@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../app/page.module.css'
 import Table from './table';
 import { ServiceTypeDropdown, serviceTypeOptions } from './servicetype';
@@ -12,10 +12,20 @@ const Inputdetail = () => {
   const [dateOfSale, setDateOfSale] = useState('');
   const [serviceType, setServiceType] = useState(null);
   const [currentOdo, setCurrentOdo] = useState('');
-  const [data, setData] = useState([]);
+  
   const [serviceTime, setServiceTime] = useState('');
-
   const [timerStarted, setTimerStarted] = useState(false);
+
+  const [data, setData] = useState(JSON.parse(localStorage.getItem('floorTrackerData')) || []);
+
+  useEffect(() => {
+    localStorage.setItem('floorTrackerData', JSON.stringify(data));
+  }, [data]);
+
+  const handleReset = () => {
+    setData([]);
+  };
+
 
 
   const handleSubmit = (e) => {
@@ -44,7 +54,6 @@ const Inputdetail = () => {
     console.log('Date of Sale:', dateOfSale);
     console.log('Service Type:', serviceType);
     console.log('Current Odometer', currentOdo)
-    
     console.log('timerStarted', timerStarted) ;
     console.log('Service Time:', serviceTime);
 
@@ -56,7 +65,8 @@ const Inputdetail = () => {
     setCurrentOdo('');
     setServiceTime('');
     setTimerStarted(false)
-  } else {
+  } 
+  else {
     // Handle case where not all required fields are filled
     alert('Please fill in all required fields.');
   }
@@ -65,11 +75,11 @@ const Inputdetail = () => {
 
   return (
 
-    <div>
-
-      <h1
-        style={{ paddingBottom: '30px' }}
-      >Welcome to the Floor Tracker App</h1>
+    <div >
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <h1 style={{ paddingBottom: '30px' }}>Welcome to the Floor Tracker App</h1>
+      <button onClick={handleReset} className={styles.resetButton}>Reset</button>
+      </div>
 
       {/* Display the table */}
       <Table data={data} />

@@ -234,3 +234,16 @@
     transform: rotate(0deg);
   }
 }
+
+.resetButton {
+  padding: 10px;
+  background-color: #4285f4;
+  color: #ffffff;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+}
+
+.resetButton:hover {
+  background-color: #cc4731; /* Darker red color on hover */
+}

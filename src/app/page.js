@@ -1,12 +1,14 @@
+
 import Image from 'next/image'
 import styles from './page.module.css'
-
 import React from 'react';
 
 import Inputdetail from '../components/inputdetail';
 
 
+
 export default function Home() {
+  
   return (
     <main className={styles.main}>
       
@@ -49,4 +51,5 @@ export default function Home() {
       <Inputdetail />
     </main>
   )
-}
+};
+
