@@ -5,6 +5,7 @@ import styles from '../app/page.module.css'
 import Table from './table';
 import { ServiceTypeDropdown, serviceTypeOptions } from './servicetype';
 
+import Link from 'next/link';
 
 const Inputdetail = () => {
   const [vehicleNo, setVehicleNo] = useState('');
@@ -239,6 +240,18 @@ const generateRowKey = () => {
 
         </div>
       </form>
+
+      <a onClick={()=>fetchData()} >
+        <button
+          className={styles.card}
+          style={{ padding: 20, backgroundColor: 'rgba(var(--card-rgb), 0.2)', fontSize: '20px', marginRight: '50px' }}
+        >Touch it &gt;</button></a>
+
+        <Link href="./productlist">
+        <button
+          className={styles.card}
+          style={{ padding: 20, backgroundColor: 'rgba(var(--card-rgb), 0.2)', fontSize: '20px', marginRight: '50px' }}
+        >Product &gt;</button></Link>
 
 
 

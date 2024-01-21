@@ -8,6 +8,7 @@ import Link from 'next/link';
 
 
 
+
 export default function Home() {
   
   return (
@@ -20,11 +21,7 @@ export default function Home() {
         </p>
         <div className={styles.code}>
           <Link href="/api">
-          {/* <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          > */}
+          
           By{' Abhilash '}
           </Link>
           {/* <Image
@@ -34,8 +31,8 @@ export default function Home() {
               width={100}
               height={24}
               priority
-            /> */}
-          {/* </a> */}
+            /> 
+           </a> */}
         </div>
       </div>
 
