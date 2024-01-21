@@ -1,10 +1,11 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../app/page.module.css'
 import Table from './table';
 import { ServiceTypeDropdown, serviceTypeOptions } from './servicetype';
 
+import Link from 'next/link';
 
 const Inputdetail = () => {
   const [vehicleNo, setVehicleNo] = useState('');
@@ -12,11 +13,52 @@ const Inputdetail = () => {
   const [dateOfSale, setDateOfSale] = useState('');
   const [serviceType, setServiceType] = useState(null);
   const [currentOdo, setCurrentOdo] = useState('');
-  const [data, setData] = useState([]);
+  
   const [serviceTime, setServiceTime] = useState('');
-
   const [timerStarted, setTimerStarted] = useState(false);
 
+  
+ // Check if localStorage is available
+  const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage;
+
+  // Initialize data state using localStorage or an empty array
+  const initialData = isLocalStorageAvailable ? JSON.parse(localStorage.getItem('floorTrackerData')) || [] : [];
+  const [data, setData] = useState(initialData);
+
+  useEffect(() => {
+    if (isLocalStorageAvailable) {
+      localStorage.setItem('floorTrackerData', JSON.stringify(data));
+    }
+  }, [data, isLocalStorageAvailable]);
+
+
+  // const handleReset = () => {
+  //   if (isLocalStorageAvailable) {
+  //     localStorage.removeItem('floorTrackerData');
+  //   }
+  //   setData([]);
+  // };
+
+  const handleReset = () => {
+    setData([]);
+    setVehicleNo('');
+    setModel('');
+    setDateOfSale('');
+    setServiceType(null);
+    setCurrentOdo('');
+    setServiceTime('');
+    setTimerStarted(false);
+  
+    data.forEach((row) => {
+      localStorage.removeItem(`timerStarted_${row.rowKey}`);
+      localStorage.removeItem(`timerRemainingTime_${row.rowKey}`);
+    });
+  };
+
+  // Function to generate a unique key
+const generateRowKey = () => {
+  return new Date().getTime(); // Using timestamp as a unique key
+};
 
   const handleSubmit = (e) => {
 
@@ -25,7 +67,8 @@ const Inputdetail = () => {
     e.preventDefault();
 
     if (vehicleNo && model && dateOfSale && serviceType && currentOdo) {
-      
+
+      const newRowKey = generateRowKey();
     // Add the entered data to the state
     const newData = {
       vehicleNo,
@@ -33,8 +76,12 @@ const Inputdetail = () => {
       dateOfSale,
       serviceType,
       currentOdo,
-      timerStarted:true, 
       serviceTime, 
+      timerStarted: true,
+        timerKey: newRowKey, // Add a key for the timer
+        serviceTime,
+        rowKey: newRowKey, // Unique key for the row
+      
     };
 
     setData([...data, newData]);
@@ -44,7 +91,6 @@ const Inputdetail = () => {
     console.log('Date of Sale:', dateOfSale);
     console.log('Service Type:', serviceType);
     console.log('Current Odometer', currentOdo)
-    
     console.log('timerStarted', timerStarted) ;
     console.log('Service Time:', serviceTime);
 
@@ -56,7 +102,13 @@ const Inputdetail = () => {
     setCurrentOdo('');
     setServiceTime('');
     setTimerStarted(false)
-  } else {
+
+    // Save initial timer state for the new row
+    localStorage.setItem(`timerStarted_${newRowKey}`, 'true');
+    localStorage.setItem(`timerRemainingTime_${newRowKey}`, String(serviceTime * 60 * 1000));
+  
+  } 
+  else {
     // Handle case where not all required fields are filled
     alert('Please fill in all required fields.');
   }
@@ -65,11 +117,11 @@ const Inputdetail = () => {
 
   return (
 
-    <div>
-
-      <h1
-        style={{ paddingBottom: '30px' }}
-      >Welcome to the Floor Tracker App</h1>
+    <div >
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <h1 style={{ paddingBottom: '30px' }}>Welcome to the Floor Tracker App</h1>
+      <button onClick={handleReset} className={styles.resetButton}>Reset</button>
+      </div>
 
       {/* Display the table */}
       <Table data={data} />
@@ -144,7 +196,7 @@ const Inputdetail = () => {
             </h2>
             {/* Use the ServiceTypeDropdown component */}
             <ServiceTypeDropdown
-              value={serviceType}
+              value={serviceType || ''}
               onChange={(value) => {
                 setServiceType(value);
                 // Find the corresponding time and set it in the state
@@ -188,6 +240,18 @@ const Inputdetail = () => {
 
         </div>
       </form>
+
+      <a onClick={()=>fetchData()} >
+        <button
+          className={styles.card}
+          style={{ padding: 20, backgroundColor: 'rgba(var(--card-rgb), 0.2)', fontSize: '20px', marginRight: '50px' }}
+        >Touch it &gt;</button></a>
+
+        <Link href="./productlist">
+        <button
+          className={styles.card}
+          style={{ padding: 20, backgroundColor: 'rgba(var(--card-rgb), 0.2)', fontSize: '20px', marginRight: '50px' }}
+        >Product &gt;</button></Link>
 
 
 
