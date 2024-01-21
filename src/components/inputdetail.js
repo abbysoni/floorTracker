@@ -241,17 +241,17 @@ const generateRowKey = () => {
         </div>
       </form>
 
-      <a onClick={()=>fetchData()} >
+      <a href="./api" >
         <button
           className={styles.card}
           style={{ padding: 20, backgroundColor: 'rgba(var(--card-rgb), 0.2)', fontSize: '20px', marginRight: '50px' }}
-        >Touch it &gt;</button></a>
+        >To API &gt;</button></a>
 
         <Link href="./productlist">
         <button
           className={styles.card}
           style={{ padding: 20, backgroundColor: 'rgba(var(--card-rgb), 0.2)', fontSize: '20px', marginRight: '50px' }}
-        >Product &gt;</button></Link>
+        > To Product &gt;</button></Link>
 
 
 
