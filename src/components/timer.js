@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -8,21 +9,18 @@ const Timer = ({ serviceTime, timerStarted, rowKey }) => {
   useEffect(() => {
     let intervalId;
 
-    const storedTime = localStorage.getItem(`timerRemainingTime_${rowKey}`);
+    const storedStartTime = localStorage.getItem(`timerStartTime_${rowKey}`);
     const storedTimerStarted = localStorage.getItem(`timerStarted_${rowKey}`);
 
-    if (storedTime && storedTimerStarted) {
-      setRemainingTime(Number(storedTime));
+    if (storedStartTime && storedTimerStarted) {
+      const elapsedTime = new Date().getTime() - Number(storedStartTime);
+      const calculatedRemainingTime = serviceTime * 60 * 1000 - elapsedTime;
+      setRemainingTime(Math.max(0, calculatedRemainingTime));
 
       if (storedTimerStarted === 'true') {
         // Resume the timer if it was started
         intervalId = setInterval(() => {
-          setRemainingTime((prevRemainingTime) => {
-            const newRemainingTime = Math.max(0, prevRemainingTime - 1000);
-            // Save the updated remaining time to local storage
-            localStorage.setItem(`timerRemainingTime_${rowKey}`, String(newRemainingTime));
-            return newRemainingTime;
-          });
+          setRemainingTime((prevRemainingTime) => Math.max(0, prevRemainingTime - 1000));
         }, 1000);
       }
     } else if (timerStarted && serviceTime) {
@@ -31,12 +29,7 @@ const Timer = ({ serviceTime, timerStarted, rowKey }) => {
       setRemainingTime(initialRemainingTime);
 
       intervalId = setInterval(() => {
-        setRemainingTime((prevRemainingTime) => {
-          const newRemainingTime = Math.max(0, prevRemainingTime - 1000);
-          // Save the updated remaining time to local storage
-          localStorage.setItem(`timerRemainingTime_${rowKey}`, String(newRemainingTime));
-          return newRemainingTime;
-        });
+        setRemainingTime((prevRemainingTime) => Math.max(0, prevRemainingTime - 1000));
       }, 1000);
     }
 
