@@ -13,17 +13,19 @@ const Inputdetail = () => {
   const [dateOfSale, setDateOfSale] = useState('');
   const [serviceType, setServiceType] = useState(null);
   const [currentOdo, setCurrentOdo] = useState('');
-  
+
   const [serviceTime, setServiceTime] = useState('');
   const [timerStarted, setTimerStarted] = useState(false);
 
-  
- // Check if localStorage is available
+
+  // Check if localStorage is available
   const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage;
 
   // Initialize data state using localStorage or an empty array
   const initialData = isLocalStorageAvailable ? JSON.parse(localStorage.getItem('floorTrackerData')) || [] : [];
   const [data, setData] = useState(initialData);
+
+
 
   useEffect(() => {
     if (isLocalStorageAvailable) {
@@ -48,17 +50,18 @@ const Inputdetail = () => {
     setCurrentOdo('');
     setServiceTime('');
     setTimerStarted(false);
-  
+
     data.forEach((row) => {
+      localStorage.removeItem(`startTime_${row.rowkey}`)
       localStorage.removeItem(`timerStarted_${row.rowKey}`);
       localStorage.removeItem(`timerRemainingTime_${row.rowKey}`);
     });
   };
 
   // Function to generate a unique key
-const generateRowKey = () => {
-  return new Date().getTime(); // Using timestamp as a unique key
-};
+  const generateRowKey = () => {
+    return new Date().getTime(); // Using timestamp as a unique key
+  };
 
   const handleSubmit = (e) => {
 
@@ -69,49 +72,52 @@ const generateRowKey = () => {
     if (vehicleNo && model && dateOfSale && serviceType && currentOdo) {
 
       const newRowKey = generateRowKey();
-    // Add the entered data to the state
-    const newData = {
-      vehicleNo,
-      model,
-      dateOfSale,
-      serviceType,
-      currentOdo,
-      serviceTime, 
-      timerStarted: true,
+      // Add the entered data to the state
+      const newData = {
+        vehicleNo,
+        model,
+        dateOfSale,
+        serviceType,
+        currentOdo,
+        serviceTime,
+        timerStarted: true,
         timerKey: newRowKey, // Add a key for the timer
         serviceTime,
         rowKey: newRowKey, // Unique key for the row
-      
-    };
+        startTime: newRowKey,  //rowkey is same as start time
 
-    setData([...data, newData]);
+      };
 
-    console.log('Vehicle No:', vehicleNo);
-    console.log('Model:', model);
-    console.log('Date of Sale:', dateOfSale);
-    console.log('Service Type:', serviceType);
-    console.log('Current Odometer', currentOdo)
-    console.log('timerStarted', timerStarted) ;
-    console.log('Service Time:', serviceTime);
+      setData([...data, newData]);
 
-    // Reset form fields
-    setVehicleNo('');
-    setModel('');
-    setDateOfSale('');
-    setServiceType('');
-    setCurrentOdo('');
-    setServiceTime('');
-    setTimerStarted(false)
+      console.log('Vehicle No:', vehicleNo);
+      console.log('Model:', model);
+      console.log('Date of Sale:', dateOfSale);
+      console.log('Service Type:', serviceType);
+      console.log('Current Odometer', currentOdo)
+      console.log('timerStarted', timerStarted);
+      console.log('Service Time:', serviceTime);
+      console.log('Start time', newRowKey)
 
-    // Save initial timer state for the new row
-    localStorage.setItem(`timerStarted_${newRowKey}`, 'true');
-    localStorage.setItem(`timerRemainingTime_${newRowKey}`, String(serviceTime * 60 * 1000));
-  
-  } 
-  else {
-    // Handle case where not all required fields are filled
-    alert('Please fill in all required fields.');
-  }
+      // Reset form fields
+      setVehicleNo('');
+      setModel('');
+      setDateOfSale('');
+      setServiceType('');
+      setCurrentOdo('');
+      setServiceTime('');
+      setTimerStarted(false)
+
+      localStorage.setItem(`timerStartTime_${newRowKey}`, newRowKey);
+      // Save initial timer state for the new row
+      localStorage.setItem(`timerStarted_${newRowKey}`, 'true');
+      localStorage.setItem(`timerRemainingTime_${newRowKey}`, String(serviceTime * 60 * 1000));
+
+    }
+    else {
+      // Handle case where not all required fields are filled
+      alert('Please fill in all required fields.');
+    }
 
   };
 
@@ -119,8 +125,8 @@ const generateRowKey = () => {
 
     <div >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <h1 style={{ paddingBottom: '30px' }}>Welcome to the Floor Tracker App</h1>
-      <button onClick={handleReset} className={styles.resetButton}>Reset</button>
+        <h1 style={{ paddingBottom: '30px' }}>Welcome to the Floor Tracker App</h1>
+        <button onClick={handleReset} className={styles.resetButton}>Reset</button>
       </div>
 
       {/* Display the table */}
@@ -241,17 +247,19 @@ const generateRowKey = () => {
         </div>
       </form>
 
-      <a onClick={()=>fetchData()} >
+      {/* <a href="./api" >
         <button
           className={styles.card}
           style={{ padding: 20, backgroundColor: 'rgba(var(--card-rgb), 0.2)', fontSize: '20px', marginRight: '50px' }}
-        >Touch it &gt;</button></a>
+        >To API &gt;</button>
+      </a>
 
-        <Link href="./productlist">
+      <Link href="./productlist">
         <button
           className={styles.card}
           style={{ padding: 20, backgroundColor: 'rgba(var(--card-rgb), 0.2)', fontSize: '20px', marginRight: '50px' }}
-        >Product &gt;</button></Link>
+        > To Product &gt;</button>
+      </Link> */}
 
 
 

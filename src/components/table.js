@@ -1,5 +1,5 @@
 // Table.js
-'use client'
+// 'use client'
 
 import React from 'react';
 import Timer from './timer';
@@ -24,7 +24,7 @@ const Table = ({ data }) => {
       </thead>
       <tbody>
         {data && data.map((row, index) => (
-          <tr key={index}>
+          <tr key={row.startTime}>
             <td>{index+1}</td>
             <td>{row.vehicleNo}</td>
             <td>{row.model}</td>
@@ -32,9 +32,13 @@ const Table = ({ data }) => {
             <td>{row.serviceType}</td>
             <td>{row.currentOdo}</td>
             <td>{row.serviceTime} Mins</td>
-            <td><Timer serviceTime={row.serviceTime} timerStarted={row.timerStarted}
-            rowKey={index} // Assuming the row index is used as a key
-            /></td>
+            <td>
+              <Timer
+                serviceTime={row.serviceTime}
+                timerStarted={row.timerStarted}
+                rowKey={row.startTime}
+              />
+            </td>
             <td>none</td>
           </tr>
         ))}
