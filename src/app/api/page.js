@@ -1,11 +1,8 @@
 'use client'
 import Counter from './counter'
 import Link from 'next/link'
-import { useState } from 'react';
-import { useEffect } from 'react';
-
-
-
+import { useState, useEffect } from 'react';
+import {getData, putData} from './apiCall';
 
 export default function ApiCalls() {
   // console.log(process.env.EDGE_CONFIG)
@@ -15,59 +12,17 @@ export default function ApiCalls() {
   // useEffect(() => {
   // older code working with edge-config.vercel.com but not with api.vercel.com
   const showData = async () => {
-    try {
-      let response = await fetch('https://edge-config.vercel.com/ecfg_1qhigiwu3auqiyfyw7rttzxfxsjn',
-        {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${'f3e0befb-6581-4020-8585-02b8ae03ca10'}`,
-            // Content-Type: 'application/json',
-          },
-        })
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const result = await response.json();
-      console.log(result);
-      // console.log(result);
-      setdata(result.items)
-
-    } catch (err) {
-      setError(err.message)
-    }
+    const response = await getData();
+    console.log(response);
+    setdata(response);
   };
   //   showData();
   // },[]);
 
   const addData = async () => {
-    try {
-      let response = await fetch('https://api.vercel.com/v1/edge-config/ecfg_1qhigiwu3auqiyfyw7rttzxfxsjn/items',
-        {
-          method: 'PATCH',
-          headers: {
-            Authorization: `Bearer ${'eyUyJwDlIMAKkT4OWvqu0jWY'}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-                      items: [
-                        {
-                          operation: 'create',
-                          key: 'example_key_1',
-                          value: 'example_value_1',
-                        },
-                      ],
-                    }),
-        })
-
-      const result = await response.json();
-      console.log(result);
-      // console.log(result);
-      setdata(result)
-
-    } catch (err) {
-      setError(err.message)
-    }
+    const response = await putData();
+    console.log(response);
+    setError(response);
   };
 
   return (

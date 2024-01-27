@@ -5,31 +5,81 @@
 // token=f3e0befb-6581-4020-8585-02b8ae03ca10
 
 // To get the data from edge config 
-// const showData = async ()=>{
+// const getData = async ()=>{
 //     try {
 //     // get data directly from api
-//     let response = await fetch('https://edge-config.vercel.com/ecfg_1qhigiwu3auqiyfyw7rttzxfxsjn?token=f3e0befb-6581-4020-8585-02b8ae03ca10',
+//     let response = await fetch('https://edge-config.vercel.com/ecfg_1qhigiwu3auqiyfyw7rttzxfxsjn',
 //       {
 //                 method: 'GET',
 //                 headers: {
 //                   Authorization: `Bearer ${'f3e0befb-6581-4020-8585-02b8ae03ca10'}`,
-//                   // Content-Type: 'application/json',
 //                 },
 //               })
-//               if (!response.ok) {
-//           throw new Error('Network response was not ok');
-//         }
+//         //       if (!response.ok) {
+//         //   throw new Error('Network response was not ok');
+//         // }
   
 //      const result = await response.json();
 //     console.log(result);
-//     // console.log(result);
-//     setdata(result.items)
+//     // setdata(result.items)
+//     return result;
 
 //   }catch(err) {
-//     setError (err.message)
+//     return err;
+//     // setError (err.message)
 //   }
 //   };
 
+//   to get specific item only
+  const getData = async ()=>{
+    try {
+    // get data directly from api
+    let response = await fetch('https://edge-config.vercel.com/ecfg_1qhigiwu3auqiyfyw7rttzxfxsjn/item/floorTrackerData',
+      {
+                method: 'GET',
+                headers: {
+                  Authorization: `Bearer ${'f3e0befb-6581-4020-8585-02b8ae03ca10'}`,
+                },
+              })
+        //       if (!response.ok) {
+        //   throw new Error('Network response was not ok');
+        // }
+  
+     const result = await response.json();
+    console.log('response from getdata api',result);
+    // setdata(result.items)
+    return result;
+
+  }catch(err) {
+    return err;
+    // setError (err.message)
+  }
+  };
+
+  const getTimerData = async ()=>{
+    try {
+    // get data directly from api
+    let response = await fetch('https://edge-config.vercel.com/ecfg_1qhigiwu3auqiyfyw7rttzxfxsjn/item/timerData',
+      {
+                method: 'GET',
+                headers: {
+                  Authorization: `Bearer ${'f3e0befb-6581-4020-8585-02b8ae03ca10'}`,
+                },
+              })
+        //       if (!response.ok) {
+        //   throw new Error('Network response was not ok');
+        // }
+  
+     const result = await response.json();
+    console.log('response from getdata api',result);
+    // setdata(result.items)
+    return result;
+
+  }catch(err) {
+    return err;
+    // setError (err.message)
+  }
+  };
 // Request all items
 // https://edge-config.vercel.com/
 // ecfg_1qhigiwu3auqiyfyw7rttzxfxsjn?
@@ -244,63 +294,73 @@
 //     console.log(error);
 //   }
 
-// export {
-//     // update, 
-//     // result,
-// }
 
+const putData= async(data)=> {
 
-// working set of functions for read and write
-// const showData = async () => {
-//     try {
-//       let response = await fetch('https://edge-config.vercel.com/ecfg_1qhigiwu3auqiyfyw7rttzxfxsjn',
-//         {
-//           method: 'GET',
-//           headers: {
-//             Authorization: `Bearer ${'f3e0befb-6581-4020-8585-02b8ae03ca10'}`,
-//             // Content-Type: 'application/json',
-//           },
-//         })
-//       if (!response.ok) {
-//         throw new Error('Network response was not ok');
-//       }
+    // const floorData = data.floorTrackerData;
+    // const timerData = data.index[1];
+    try {
+        let response = await fetch('https://api.vercel.com/v1/edge-config/ecfg_1qhigiwu3auqiyfyw7rttzxfxsjn/items',
+          {
+            method: 'PATCH',
+            headers: {
+              Authorization: `Bearer ${'eyUyJwDlIMAKkT4OWvqu0jWY'}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                        items: [
+                          {
+                            operation: 'update',
+                            key: 'floorTrackerData',
+                            value:{data} ,
+                          },
+                        ],
+                      }),
+          })
+  
+        const result = await response.json();
+        console.log("response from putdata api",result);
+        // console.log(result);
+        return result;
+  
+      } catch (err) {
+        return err;
+      }
+}
 
-//       const result = await response.json();
-//       console.log(result);
-//       // console.log(result);
-//       setdata(result.items)
+const putTimerData= async(data)=> {
 
-//     } catch (err) {
-//       setError(err.message)
-//     }
-//   };
+  // const floorData = data.floorTrackerData;
+  // const timerData = data.index[1];
+  try {
+      let response = await fetch('https://api.vercel.com/v1/edge-config/ecfg_1qhigiwu3auqiyfyw7rttzxfxsjn/items',
+        {
+          method: 'PATCH',
+          headers: {
+            Authorization: `Bearer ${'eyUyJwDlIMAKkT4OWvqu0jWY'}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+                      items: [
+                        {
+                          operation: 'Update',
+                          key: 'timerData',
+                          value:{data} ,
+                        },
+                      ],
+                    }),
+        })
 
-// const addData = async () => {
-//     try {
-//       let response = await fetch('https://api.vercel.com/v1/edge-config/ecfg_1qhigiwu3auqiyfyw7rttzxfxsjn/items',
-//         {
-//           method: 'PATCH',
-//           headers: {
-//             Authorization: `Bearer ${'eyUyJwDlIMAKkT4OWvqu0jWY'}`,
-//             'Content-Type': 'application/json',
-//           },
-//           body: JSON.stringify({
-//                       items: [
-//                         {
-//                           operation: 'create',
-//                           key: 'example_key_1',
-//                           value: 'example_value_1',
-//                         },
-//                       ],
-//                     }),
-//         })
+        // `timerData_${new Date().getDate()}`,
 
-//       const result = await response.json();
-//       console.log(result);
-//       // console.log(result);
-//       setdata(result)
+      const result = await response.json();
+      console.log("response from putTimerdata api",result);
+      // console.log(result);
+      return result;
 
-//     } catch (err) {
-//       setError(err.message)
-//     }
-//   };
+    } catch (err) {
+      return err;
+    }
+}
+
+export{ getData, getTimerData, putData, putTimerData};
