@@ -1,11 +1,11 @@
+
 'use client'
 
 import React, { useState, useEffect } from 'react';
 import styles from '../app/page.module.css'
 import Table from './table';
 import { ServiceTypeDropdown, serviceTypeOptions } from './servicetype';
-
-import Link from 'next/link';
+import { putData, putTimerData} from '../app/api/apiCall'
 
 const Inputdetail = () => {
   const [vehicleNo, setVehicleNo] = useState('');
@@ -13,10 +13,31 @@ const Inputdetail = () => {
   const [dateOfSale, setDateOfSale] = useState('');
   const [serviceType, setServiceType] = useState(null);
   const [currentOdo, setCurrentOdo] = useState('');
+  const [serviceAdv,setServiceAdv] = useState('');
 
   const [serviceTime, setServiceTime] = useState('');
   const [timerStarted, setTimerStarted] = useState(false);
+  const [timerData, setTimerData] = useState([]);
 
+  const addDataToEdge = async (edData) => {
+    const response = await putData(edData);
+    if(edData){
+      console.log("Data sent from input detail to edge",edData);
+      console.log(response);
+    setError(response);
+    } else console.log('No response');
+       };
+
+      //  const addTimerDataToEdge = async (edData) => {
+      //   const response = await putTimerData(edData);
+      //   if(edData){
+      //     console.log("Data sent from input detail to edge",edData);
+      //     console.log(response);
+      //   setError(response);
+      //   } else console.log('No response');
+        
+      // };
+    
 
   // Check if localStorage is available
   const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage;
@@ -34,13 +55,6 @@ const Inputdetail = () => {
   }, [data, isLocalStorageAvailable]);
 
 
-  // const handleReset = () => {
-  //   if (isLocalStorageAvailable) {
-  //     localStorage.removeItem('floorTrackerData');
-  //   }
-  //   setData([]);
-  // };
-
   const handleReset = () => {
     setData([]);
     setVehicleNo('');
@@ -50,6 +64,7 @@ const Inputdetail = () => {
     setCurrentOdo('');
     setServiceTime('');
     setTimerStarted(false);
+    setServiceAdv('');
 
     data.forEach((row) => {
       localStorage.removeItem(`startTime_${row.rowkey}`)
@@ -81,14 +96,23 @@ const Inputdetail = () => {
         currentOdo,
         serviceTime,
         timerStarted: true,
-        timerKey: newRowKey, // Add a key for the timer
-        serviceTime,
         rowKey: newRowKey, // Unique key for the row
         startTime: newRowKey,  //rowkey is same as start time
-
+        serviceAdv
       };
 
+      // const newTimerData = {
+      //   serviceTime,
+      //   timerStarted: true,
+      //   startTime: newRowKey,  //rowkey is same as start time
+      //   remainingTime:serviceTime*60*1000,
+      // };
+
+      // setTimerData(newTimerData);
+
       setData([...data, newData]);
+      addDataToEdge([...data, newData]);
+      // addTimerDataToEdge(timerData);
 
       console.log('Vehicle No:', vehicleNo);
       console.log('Model:', model);
@@ -107,6 +131,10 @@ const Inputdetail = () => {
       setCurrentOdo('');
       setServiceTime('');
       setTimerStarted(false)
+      setServiceAdv('');
+
+
+
 
       localStorage.setItem(`timerStartTime_${newRowKey}`, newRowKey);
       // Save initial timer state for the new row
@@ -235,6 +263,20 @@ const Inputdetail = () => {
               Enter current KM
             </p>
           </a>
+          <a className={styles.card}>
+            <h2>
+              Service Advisor
+            </h2>
+            <input
+             type="text"
+              id="serviceAdv"
+              value={serviceAdv}
+             onChange={(e) => setServiceAdv(e.target.value)}
+             />
+             <p>
+              Enter SA Name
+           </p>
+           </a>
 
 
           <button

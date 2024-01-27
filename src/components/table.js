@@ -31,7 +31,7 @@ const Table = ({ data }) => {
             <td>{row.dateOfSale}</td>
             <td>{row.serviceType}</td>
             <td>{row.currentOdo}</td>
-            <td>{row.serviceTime} Mins</td>
+            <td>{row.serviceAdv} Mins</td>
             <td>
               <Timer
                 serviceTime={row.serviceTime}
