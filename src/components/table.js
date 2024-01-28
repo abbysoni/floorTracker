@@ -13,11 +13,11 @@ const Table = ({ data }) => {
         <tr>
           <th>Sr No.</th>
           <th>Vehicle No.</th>
-          <th>Model No.</th>
+          <th>Model</th>
           <th>Date Of Sale</th>
           <th>Nature of Work</th>
-          <th>Odo Reading</th>
-          <th>Service Advisor</th>
+          <th>Odometer</th>
+          <th>S. Advisor</th>
           <th>Timer</th>
           <th>Actions</th>
         </tr>
