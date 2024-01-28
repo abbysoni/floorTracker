@@ -24,6 +24,38 @@
   .customTable tr {
     border-bottom: 1px solid #ddd;
   }
+
+  @media (max-width: 400px) {
+    .content {
+      padding: 1rem;
+    }
+
+    .customTable {
+      width: 100vw;
+      border-collapse: collapse;
+      margin-top: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .customTable thead {
+      background-color: #f5f5f5;
+    }
+    
+    .customTable th,
+    .customTable td {
+      padding: 10px;
+      text-align: left;
+      /* row-gap: 10px; */
+    }
+    
+    .customTable th {
+      font-weight: bold;
+    }
+    
+    .customTable tr {
+      border-bottom: 1px solid #ddd;
+    }
+  }
   
   /* Adjust the styles as needed */
   
