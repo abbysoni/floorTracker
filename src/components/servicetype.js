@@ -1,6 +1,7 @@
 // ServiceTypeDropdown.js
 
 import React from 'react';
+import styles from '../app/page.module.css'
 const serviceTypeOptions = [
     { label: 'None', time: 0 },
     { label: 'Clutch Work', time: 30 },
@@ -13,6 +14,7 @@ const ServiceTypeDropdown = ({ value, onChange }) => {
 
   return (
     <select
+    className={styles.inputbox} 
       id="serviceType"
       value={value || ''}
       onChange={(e) => onChange(e.target.value)}

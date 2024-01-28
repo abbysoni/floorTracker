@@ -19,14 +19,14 @@ const Inputdetail = () => {
   const [timerStarted, setTimerStarted] = useState(false);
   const [timerData, setTimerData] = useState([]);
 
-  const addDataToEdge = async (edData) => {
-    const response = await putData(edData);
-    if(edData){
-      console.log("Data sent from input detail to edge",edData);
-      console.log(response);
-    setError(response);
-    } else console.log('No response');
-       };
+  // const addDataToEdge = async (edData) => {
+  //   const response = await putData(edData);
+  //   if(edData){
+  //     console.log("Data sent from input detail to edge",edData);
+  //     console.log(response);
+  //   setError(response);
+  //   } else console.log('No response');
+  //      };
 
       //  const addTimerDataToEdge = async (edData) => {
       //   const response = await putTimerData(edData);
@@ -111,7 +111,7 @@ const Inputdetail = () => {
       // setTimerData(newTimerData);
 
       setData([...data, newData]);
-      addDataToEdge([...data, newData]);
+      // addDataToEdge([...data, newData]);
       // addTimerDataToEdge(timerData);
 
       console.log('Vehicle No:', vehicleNo);
@@ -173,6 +173,7 @@ const Inputdetail = () => {
               Vehicle No.
             </h2>
             <input
+            className={styles.inputbox} 
               type="text"
               id="vehicleNo"
               value={vehicleNo}
@@ -189,9 +190,10 @@ const Inputdetail = () => {
             rel="noopener noreferrer"
           >
             <h2>
-              Model No.
+              Vehicle Model
             </h2>
             <input
+            className={styles.inputbox} 
               type="text"
               id="model"
               value={model}
@@ -211,6 +213,7 @@ const Inputdetail = () => {
               Date Of Sale
             </h2>
             <input
+            className={styles.inputbox} 
               type="date"
               id="dateOfSale"
               value={dateOfSale}
@@ -230,6 +233,7 @@ const Inputdetail = () => {
             </h2>
             {/* Use the ServiceTypeDropdown component */}
             <ServiceTypeDropdown
+            
               value={serviceType || ''}
               onChange={(value) => {
                 setServiceType(value);
@@ -254,6 +258,7 @@ const Inputdetail = () => {
               Odo reading
             </h2>
             <input
+            className={styles.inputbox} 
               type="text"
               id="currentOdo"
               value={currentOdo}
@@ -268,6 +273,7 @@ const Inputdetail = () => {
               Service Advisor
             </h2>
             <input
+            className={styles.inputbox} 
              type="text"
               id="serviceAdv"
               value={serviceAdv}
@@ -280,8 +286,7 @@ const Inputdetail = () => {
 
 
           <button
-            className={styles.card}
-            style={{ padding: 0, backgroundColor: 'rgba(var(--card-rgb), 0.2)', fontSize: '20px', marginRight: '50px' }}
+            className={styles.inputcard}
             type="submit"
           >
             <span>Enter </span></button>

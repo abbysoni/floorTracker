@@ -43,13 +43,13 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(6, minmax(18%, auto));
+  grid-template-columns: repeat(7, minmax(14%, auto));
   max-width: 100%;
   width: var(--max-width);
 }
 
 .card {
-  padding: 1rem 1.2rem;
+  padding: 0.5rem 1rem;
   border-radius: var(--border-radius);
   background: rgba(var(--card-rgb), 0);
   border: 1px solid rgba(var(--card-border-rgb), 0);
@@ -71,8 +71,29 @@
   opacity: 0.6;
   font-size: 0.9rem;
   line-height: 1.5;
-  max-width: 30ch;
+  max-width: 20ch;
 }
+
+/* .input {
+  max-width: min-content;
+  background: rgba(var(--card-rgb), 0.2);
+  font-size: '20px';
+  
+  padding: 0.5rem 1rem;
+  border-radius:2px ;
+  /* border: 1px solid rgba(var(--card-border-rgb), 0);
+  transition: background 200ms, border 200ms;
+} */
+
+.inputbox {
+  width: 100%; /* Adjust the width as needed */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  padding: 1px; /* Adjust the padding as needed */
+  border: 2px solid #111111; /* Add a border */
+  border-radius: 4px; /* Add rounded corners */
+  font-size: 14px; /* Adjust the font size as needed */
+}
+
 
 .center {
   display: flex;
@@ -131,16 +152,16 @@
 }
 
 /* Mobile */
-@media (max-width: 700px) {
+@media (max-width: 800px) {
   .content {
     padding: 4rem;
   }
 
   .grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 2fr;
     margin-bottom: 120px;
-    max-width: 240px;
-    text-align: left;
+    max-width: 200px;
+    text-align: center;
   }
 
   .card {
@@ -210,9 +231,9 @@
 }
 
 /* Tablet and Smaller Desktop */
-@media (min-width: 70px) and (max-width: 1120px) {
+@media (min-width: 70px) and (max-width: 1100px) {
   .grid {
-    grid-template-columns: repeat(6, 17%);
+    grid-template-columns: repeat(4, 25%);
   }
 }
 

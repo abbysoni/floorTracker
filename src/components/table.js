@@ -17,7 +17,7 @@ const Table = ({ data }) => {
           <th>Date Of Sale</th>
           <th>Nature of Work</th>
           <th>Odo Reading</th>
-          <th>Time Alloted</th>
+          <th>Service Advisor</th>
           <th>Timer</th>
           <th>Actions</th>
         </tr>
@@ -31,7 +31,7 @@ const Table = ({ data }) => {
             <td>{row.dateOfSale}</td>
             <td>{row.serviceType}</td>
             <td>{row.currentOdo}</td>
-            <td>{row.serviceAdv} Mins</td>
+            <td>{row.serviceAdv}</td>
             <td>
               <Timer
                 serviceTime={row.serviceTime}
