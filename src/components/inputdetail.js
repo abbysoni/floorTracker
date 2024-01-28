@@ -150,7 +150,9 @@ const Inputdetail = () => {
   };
 
   return (
-    <main className={styles.mainID}>
+    <main 
+    // className={styles.mainID}
+    >
 
     <div>
       <div className={styles.tableHeader}>
@@ -192,7 +194,7 @@ const Inputdetail = () => {
             rel="noopener noreferrer"
           >
             <h2>
-              Vehicle Model
+              Model No.
             </h2>
             <input
             className={styles.inputbox} 
@@ -257,7 +259,7 @@ const Inputdetail = () => {
             rel="noopener noreferrer"
           >
             <h2>
-              Odo reading
+              Odometer
             </h2>
             <input
             className={styles.inputbox} 
@@ -272,7 +274,7 @@ const Inputdetail = () => {
           </a>
           <a className={styles.card}>
             <h2>
-              Service Advisor
+              S. Advisor
             </h2>
             <input
             className={styles.inputbox} 
