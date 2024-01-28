@@ -150,11 +150,13 @@ const Inputdetail = () => {
   };
 
   return (
+    <main className={styles.mainID}>
 
-    <div >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1 style={{ paddingBottom: '30px' }}>Welcome to the Floor Tracker App</h1>
+    <div>
+      <div className={styles.tableHeader}>
+        <h1>Welcome to the Floor Tracker App </h1>
         <button onClick={handleReset} className={styles.resetButton}>Reset</button>
+        
       </div>
 
       {/* Display the table */}
@@ -180,7 +182,7 @@ const Inputdetail = () => {
               onChange={(e) => setVehicleNo(e.target.value)}
             // placeholder='Enter Vehicle no. here'
             />
-            <p>Enter Vehicle no. here</p>
+            {/* <p>Enter Vehicle no. here</p> */}
           </a>
 
           <a
@@ -200,7 +202,7 @@ const Inputdetail = () => {
               onChange={(e) => setModel(e.target.value)}
             // placeholder='Enter model no. '
             />
-            <p>Enter model no.</p>
+            {/* <p>Enter model no.</p> */}
           </a>
 
           <a
@@ -219,7 +221,7 @@ const Inputdetail = () => {
               value={dateOfSale}
               onChange={(e) => setDateOfSale(e.target.value)}
             />
-            <p>Enter DOS of vehicle</p>
+            {/* <p>Enter DOS of vehicle</p> */}
           </a>
 
           <a
@@ -242,9 +244,9 @@ const Inputdetail = () => {
                 setServiceTime(selectedOption ? selectedOption.time : 20);
               }}
             />
-            <p>
+            {/* <p>
               Describe work nature
-            </p>
+            </p> */}
           </a>
 
           <a
@@ -264,9 +266,9 @@ const Inputdetail = () => {
               value={currentOdo}
               onChange={(e) => setCurrentOdo(e.target.value)}
             />
-            <p>
+            {/* <p>
               Enter current KM
-            </p>
+            </p> */}
           </a>
           <a className={styles.card}>
             <h2>
@@ -279,9 +281,9 @@ const Inputdetail = () => {
               value={serviceAdv}
              onChange={(e) => setServiceAdv(e.target.value)}
              />
-             <p>
+             {/* <p>
               Enter SA Name
-           </p>
+           </p> */}
            </a>
 
 
@@ -311,6 +313,7 @@ const Inputdetail = () => {
 
 
     </div>
+    </main>
   );
 };
 
