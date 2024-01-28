@@ -47,9 +47,12 @@ export default function Home() {
         />
       </div>
 
+      <div className={styles.desc}>
       {/* //options to input vehicle details */}
       <Inputdetail />
+      </div>
     </main>
+    
   )
 };
 
